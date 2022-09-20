@@ -1,0 +1,22 @@
+﻿1) ¿Qué crítica le harías al protocolo de #estaHerido y #noEstaHerido? (en vez de tener solo el mensaje #estaHerido y hacer “#estaHerido not” para saber la negación)
+
+
+RTA: Como crítica podemos decir que se están implementando dos mensajes para una funcionalidad que podría cumplir un solo.
+
+
+
+
+2) ¿Qué opinan de que para algunas funcionalidades tenemos 3 tests para el mismo comportamiento pero aplicando a cada uno de los combatientes (Arthas, Mankrik y Olgra)
+
+
+RTA: Consideramos que es un Smell ya que hay mucho código repetido tanto en los métodos como en los test. Esto podría solucionarse por ejemplo con una clase padre “Combatiente” que abarque los métodos que tienen los tres objetos en común  y que estos sean testeados solo una vez para esta clase.
+
+
+
+
+
+
+3) ¿Cómo modelaron el resultado de haber desarrollado un combate? ¿qué opciones consideraron y por qué se quedaron con la que entregaron y por qué descartaron a las otras?
+
+RTA: Utilizamos una colaboración que compara la cantidad de combatientes que “siguen en pie”, devuelve un booleano y lo retornamos.
+Una opción fue recorrer las dos listas de combatientes chequeando uno por uno que no estuvieran fuera de combate, pero cómo hacemos el chequeo sobre las listas en cada ronda nunca va a haber un combatiente fuera de combate al terminar el mismo, esto es la lista está vacía o todos los quedan están en pie.
