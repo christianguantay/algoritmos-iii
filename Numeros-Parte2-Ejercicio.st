@@ -527,9 +527,8 @@ isZero
 	
 	^self class with: value // aDivisor integerValue! !
 
-!Entero methodsFor: 'arithmetic operations - private' stamp: 'HernanWilkinson 5/7/2016 21:00'!
+!Entero methodsFor: 'arithmetic operations - private' stamp: 'jr 10/3/2022 23:07:20'!
 greatestCommonDivisorWith: anEntero 
-	
 	^self class with: (value gcd: anEntero integerValue)! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -542,13 +541,14 @@ Entero class
 negativeFibonacciErrorDescription
 	^ ' Fibonacci no está definido aquí para Enteros Negativos'! !
 
-!Entero class methodsFor: 'instance creation' stamp: 'jr 10/2/2022 23:56:13'!
+!Entero class methodsFor: 'instance creation' stamp: 'jr 10/4/2022 18:35:03'!
 with: aValue 
 	
 	"Esta verificacion esta puesta por si se equivocan y quieren crear un Entero pasando otra cosa que un Integer - Hernan"
 	aValue isInteger ifFalse: [  self error: 'aValue debe ser anInteger' ].
 	
-	(aValue = 0 or: (aValue = 1)) ifTrue: [ ^ CasoBaseFibonacci new initializeWith: aValue].
+	(aValue = 0) ifTrue: [ ^ Cero new initializeWith: aValue].
+	(aValue = 1) ifTrue: [ ^ CasoBaseFibonacci new initializeWith: aValue].
 	aValue < 0 ifTrue: [ ^ Negativo new initializeWith: aValue].
 	
 	^self new initializeWith: aValue! !
@@ -561,9 +561,25 @@ Entero subclass: #CasoBaseFibonacci
 	poolDictionaries: ''
 	category: 'Numeros-Parte2-Ejercicio'!
 
-!CasoBaseFibonacci methodsFor: 'as yet unclassified' stamp: 'jr 10/2/2022 23:54:14'!
+!CasoBaseFibonacci methodsFor: 'as yet unclassified' stamp: 'jr 10/4/2022 18:31:45'!
 fibonacci 
 	^ Entero with: 1.! !
+
+
+!classDefinition: #Cero category: 'Numeros-Parte2-Ejercicio'!
+CasoBaseFibonacci subclass: #Cero
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros-Parte2-Ejercicio'!
+
+!Cero methodsFor: 'as yet unclassified' stamp: 'jr 10/4/2022 18:32:56'!
+dividirFraccion: aFraccion 
+	Numero error: Numero canNotDivideByZeroErrorDescription! !
+
+!Cero methodsFor: 'as yet unclassified' stamp: 'jr 10/4/2022 18:32:33'!
+divirEntero: anEntero
+	Numero error: Numero canNotDivideByZeroErrorDescription! !
 
 
 !classDefinition: #Negativo category: 'Numeros-Parte2-Ejercicio'!
@@ -663,12 +679,12 @@ numerator
 	^ numerator! !
 
 
-!Fraccion methodsFor: 'initialization' stamp: 'HernanWilkinson 5/7/2016 22:54'!
+!Fraccion methodsFor: 'initialization' stamp: 'jr 10/3/2022 23:09:07'!
 initializeWith: aNumerator over: aDenominator
 
 	"Estas precondiciones estan por si se comenten errores en la implementacion - Hernan"
 	aNumerator isZero ifTrue: [ self error: 'una fraccion no puede ser cero' ].
-	aDenominator isOne ifTrue: [ self error: 'una fraccion no puede tener denominador 1 porque sino es un entero' ].
+	"aDenominator isOne ifTrue: [ self error: 'una fraccion no puede tener denominador 1 porque sino es un entero' ]."
 	
 	numerator := aNumerator.
 	denominator := aDenominator ! !
@@ -704,16 +720,9 @@ printOn: aStream
 Fraccion class
 	instanceVariableNames: ''!
 
-!Fraccion class methodsFor: 'intance creation' stamp: 'jr 10/3/2022 00:02:57'!
+!Fraccion class methodsFor: 'intance creation' stamp: 'jr 10/3/2022 23:14:00'!
 with: aDividend over: aDivisor
-
 	| greatestCommonDivisor numerator denominator |
-	
-	"aDivisor isZero ifTrue: [ self error: self canNotDivideByZeroErrorDescription ]."
-	
-	"aDividend isZero ifTrue: [ ^aDividend]."
-	
-	"aDivisor isNegative ifTrue:[ ^aDividend negated / aDivisor negated]."
 	
 	greatestCommonDivisor := aDividend greatestCommonDivisorWith: aDivisor. 
 	numerator := aDividend // greatestCommonDivisor.
