@@ -150,16 +150,13 @@ Object subclass: #Base
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!Base methodsFor: 'as yet unclassified' stamp: 'CG 10/11/2022 21:20:25'!
-initialize! !
+!Base methodsFor: 'as yet unclassified' stamp: 'jr 10/13/2022 13:01:54'!
+anterior
+	^ OOStack error: OOStack stackEmptyErrorDescription! !
 
-!Base methodsFor: 'as yet unclassified' stamp: 'CG 10/11/2022 21:23:07'!
+!Base methodsFor: 'as yet unclassified' stamp: 'jr 10/13/2022 13:00:33'!
 value
-	^value! !
-
-!Base methodsFor: 'as yet unclassified' stamp: 'CG 10/11/2022 21:22:28'!
-value: aValue
-	value := aValue! !
+	^ OOStack error: OOStack stackEmptyErrorDescription! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -183,12 +180,9 @@ Object subclass: #Elemento
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!Elemento methodsFor: 'as yet unclassified' stamp: 'CG 10/11/2022 21:15:59'!
-anterior: aValue
-	anterior := aValue! !
-
-!Elemento methodsFor: 'as yet unclassified' stamp: 'CG 10/11/2022 20:58:30'!
-initialize! !
+!Elemento methodsFor: 'as yet unclassified' stamp: 'jr 10/13/2022 12:43:28'!
+anterior: anAnterior
+	anterior := anAnterior! !
 
 !Elemento methodsFor: 'as yet unclassified' stamp: 'CG 10/11/2022 21:30:56'!
 value
@@ -199,7 +193,7 @@ value: aValue
 	value := aValue! !
 
 
-!Elemento methodsFor: 'xxx' stamp: 'CG 10/11/2022 21:13:10'!
+!Elemento methodsFor: 'xxx' stamp: 'jr 10/13/2022 13:03:09'!
 anterior
 	^ anterior! !
 
@@ -209,19 +203,15 @@ anterior
 Elemento class
 	instanceVariableNames: ''!
 
-!Elemento class methodsFor: 'class initialization' stamp: 'CG 10/11/2022 21:01:19'!
-with: aString 
+!Elemento class methodsFor: 'class initialization' stamp: 'jr 10/13/2022 12:42:32'!
+with: aString over: anAnterior
+
 	| result |
+	
 	result := self new.
+	
 	result value: aString.
 	
-	^result! !
-
-!Elemento class methodsFor: 'class initialization' stamp: 'CG 10/11/2022 21:15:29'!
-with: aString over: anAnterior
-	| result |
-	result := self new.
-	result value: aString.
 	result anterior: anAnterior.
 	
 	^result! !
@@ -229,33 +219,41 @@ with: aString over: anAnterior
 
 !classDefinition: #OOStack category: 'Stack-Exercise'!
 Object subclass: #OOStack
-	instanceVariableNames: 'top'
+	instanceVariableNames: 'top size'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'CG 10/11/2022 20:43:47'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'jr 10/13/2022 12:56:20'!
 initialize
-	top := Base new. 
-	! !
+	size := 0.
+	top := Base new. ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'CG 10/11/2022 21:08:33'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'jr 10/13/2022 12:40:31'!
 isEmpty	
 	^ (top isKindOf:Base)
 	! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'CG 10/11/2022 21:30:05'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'jr 10/13/2022 13:02:18'!
 pop
 	| result |
 	result := top.
 	top := result anterior.
-	
 	^ result value.! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'CG 10/11/2022 21:14:30'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'jr 10/13/2022 12:41:01'!
 push: unaCadena
-	top := Elemento with: unaCadena over: top
+	size := size + 1.
+	top := Elemento with: unaCadena over: top	! !
+
+!OOStack methodsFor: 'as yet unclassified' stamp: 'jr 10/13/2022 12:40:48'!
+size 
+	^ size.
 	! !
+
+!OOStack methodsFor: 'as yet unclassified' stamp: 'jr 10/13/2022 13:12:36'!
+top
+	^top value! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
