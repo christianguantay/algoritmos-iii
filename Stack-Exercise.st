@@ -137,10 +137,90 @@ test10CanNotTopWhenThereAreNoObjectsInTheStack
 
 !classDefinition: #SentenceFinderByPrefixTest category: 'Stack-Exercise'!
 TestCase subclass: #SentenceFinderByPrefixTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'anOOStack aSentenceFinder'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 22:43:04'!
+setUp
+	anOOStack := OOStack new.
+	aSentenceFinder := SentenceFinderByPrefix new.! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 23:28:07'!
+test01sentenceFinderRaiseEmptyPrefixException
+	self  should: [ aSentenceFinder find: '' withAnOOStack: anOOStack ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: SentenceFinderByPrefix emptyPrefixErrorDescription equals: anError messageText ]! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 23:27:22'!
+test02sentenceFinderRaiseMultipleWordsException
+	self  should: [ aSentenceFinder find: 'The Winter' withAnOOStack: anOOStack ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: SentenceFinderByPrefix prefixWithMoreThanOneWordErrorDescription equals: anError messageText ]
+	! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 23:26:29'!
+test03sentenceFinderFindsAMatch
+	|sentencesFound|
+	anOOStack push: 'The Winter'.
+	
+	sentencesFound := aSentenceFinder find: 'The' withAnOOStack: anOOStack.
+	
+	self assert: (sentencesFound size == 1).! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 23:26:04'!
+test04sentenceFinderFindsMultipleMatches
+	|sentencesFound|
+	anOOStack push: 'The Winter'.
+	anOOStack push: 'The Winter Is Coming'.
+	
+	sentencesFound := aSentenceFinder find: 'The' withAnOOStack: anOOStack.
+	
+	self assert: (sentencesFound size == 2).! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 23:25:24'!
+test05sentenceFinderIsCaseSensitive
+	|sentencesFound|
+	anOOStack push: 'The Winter'.
+	
+	sentencesFound := aSentenceFinder find: 'the' withAnOOStack: anOOStack.
+	
+	self assert: (sentencesFound size == 0).! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 23:30:56'!
+test06sentenceFinderCanNotFindMatches
+	|sentencesFound|
+	anOOStack push: 'The Winter'.
+	anOOStack push: 'The Winter is Coming'.
+	anOOStack push: 'The Winter is cold'.
+	
+	sentencesFound := aSentenceFinder find: 'Messi' withAnOOStack: anOOStack.
+	
+	self assert: (sentencesFound isEmpty).! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 23:33:27'!
+test07sentenceFinderLeavesStackUntouched
+	anOOStack push: 'The Winter'.
+	anOOStack push: 'The Winter is Coming'.
+	anOOStack push: 'The Winter is cold'.
+	
+	aSentenceFinder find: 'Messi' withAnOOStack: anOOStack.
+	
+	self assert: (anOOStack size == 3).! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 23:36:11'!
+test08sentenceFinderFindsSentenceFromPartialPrefix
+	|sentencesFound|
+	anOOStack push: 'The Winter'.
+	anOOStack push: 'Winter is Coming'.
+	anOOStack push: 'Cold'.
+	
+	sentencesFound := aSentenceFinder find: 'Col' withAnOOStack: anOOStack.
+	
+	self assert: ((sentencesFound at:1) = 'Cold').! !
 
 
 !classDefinition: #Base category: 'Stack-Exercise'!
@@ -273,3 +353,43 @@ Object subclass: #SentenceFinderByPrefix
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
+
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 23:02:06'!
+assertPrefix: aPrefixToAssert
+
+	(aPrefixToAssert = ''	) ifTrue: [ self error: SentenceFinderByPrefix emptyPrefixErrorDescription].
+
+	(aPrefixToAssert findString: ' '	)  > 0 ifTrue: [ self error: SentenceFinderByPrefix prefixWithMoreThanOneWordErrorDescription]! !
+
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 22:37:32'!
+find: aPrefixToBeFound withAnOOStack: anOOStack
+	|auxStack sentencesFound|
+	
+	self assertPrefix: aPrefixToBeFound.
+	
+	auxStack := anOOStack copy.
+	sentencesFound := OrderedCollection new.
+	
+	anOOStack size timesRepeat: [ 
+		| stringPoped |
+		stringPoped := auxStack pop.
+		(stringPoped beginsWith: aPrefixToBeFound) ifTrue: [ sentencesFound add: stringPoped ].
+				 ].
+	
+	^sentencesFound.
+	
+! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'SentenceFinderByPrefix class' category: 'Stack-Exercise'!
+SentenceFinderByPrefix class
+	instanceVariableNames: ''!
+
+!SentenceFinderByPrefix class methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 22:38:12'!
+emptyPrefixErrorDescription
+	^'Prefix can not be empty'! !
+
+!SentenceFinderByPrefix class methodsFor: 'as yet unclassified' stamp: 'CG 10/13/2022 22:38:31'!
+prefixWithMoreThanOneWordErrorDescription
+	^'Prefix can only be one word'! !
