@@ -5,11 +5,11 @@ TestCase subclass: #MarsRoverTest
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 19:49:35'!
-test01MarsRoverRecibeComandoInvalidoNoHaceNada
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/4/2022 16:30:56'!
+test01MarsRoverRecibeComandoInvalidoNoCambiaPosicion
 
 	| marsRover |
-	marsRover := MarsRover in: 0@0 withDir: #N.
+	marsRover := MarsRover in: 0@0 withDir: DirNorth new.
 	
 	marsRover move: 'Ñ'.
 	
@@ -21,11 +21,11 @@ test01MarsRoverRecibeComandoInvalidoNoHaceNada
 	
 	! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 17:43:00'!
-test02MarsRoverRecibeComandoCambiaDireccionPeroNoPosicion
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/3/2022 19:16:07'!
+test02MarsRoverRecibeComandoNoCambiaPosicion
 
 	| marsRover |
-	marsRover := MarsRover in: 0@0 withDir: #N.
+	marsRover := MarsRover in: 0@0 withDir: DirNorth new.
 	
 	marsRover move: 'l'.
 	
@@ -37,11 +37,26 @@ test02MarsRoverRecibeComandoCambiaDireccionPeroNoPosicion
 	
 	! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 19:53:37'!
-test03MarsRoverRecibeComandoCambiaDireccionYPosicion
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/4/2022 16:32:23'!
+test03MarsRoverRecibeComandoNoCambiaDireccion
 
 	| marsRover |
-	marsRover := MarsRover in: 0@0 withDir: #N.
+	marsRover := MarsRover in: 0@0 withDir: DirNorth new.
+	
+	marsRover move: 'f'.
+	
+	self assert: (marsRover inDir: DirNorth). 
+	
+	
+	
+	
+	! !
+
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/3/2022 19:16:30'!
+test04MarsRoverRecibeComandoCambiaPosicionEnDireccionCambiada
+
+	| marsRover |
+	marsRover := MarsRover in: 0@0 withDir: DirNorth new.
 	
 	marsRover move: 'lf'.
 	
@@ -53,11 +68,11 @@ test03MarsRoverRecibeComandoCambiaDireccionYPosicion
 	
 	! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 19:57:13'!
-test04MarsRoverRecibeComandoConCaracteresInvalidosCambiaDireccionYPosicion
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/3/2022 19:16:34'!
+test05MarsRoverRecibeComandoConCaracteresInvalidosCambiaDireccionYPosicion
 
 	| marsRover |
-	marsRover := MarsRover in: 0@0 withDir: #N.
+	marsRover := MarsRover in: 0@0 withDir: DirNorth new.
 	
 	marsRover move: 'r3f'.
 	
@@ -69,31 +84,16 @@ test04MarsRoverRecibeComandoConCaracteresInvalidosCambiaDireccionYPosicion
 	
 	! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 20:21:20'!
-test05MarsRoverRecibeComandoVuelvePosicionInicial
-
-	| marsRover |
-	marsRover := MarsRover in: 0@0 withDir: #N.
-	
-	marsRover move: 'llll'.
-	
-	self assert: (marsRover inDir: #N). 
-	
-	
-	
-	
-	
-	! !
-
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 20:21:30'!
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/4/2022 16:32:43'!
 test06MarsRoverRecibeComandoVuelvePosicionInicial
 
 	| marsRover |
-	marsRover := MarsRover in: 0@0 withDir: #N.
+	marsRover := MarsRover in: 0@0 withDir: DirNorth new.
 	
+	marsRover move: 'llll'.
 	marsRover move: 'rrrr'.
 	
-	self assert: (marsRover inDir: #N). 
+	self assert: (marsRover inDir: DirNorth). 
 	
 	
 	
@@ -101,11 +101,11 @@ test06MarsRoverRecibeComandoVuelvePosicionInicial
 	
 	! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 20:33:51'!
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/3/2022 19:16:45'!
 test07MarsRoverRecibeComandoSeMueveVariasPosiciones
 
 	| marsRover |
-	marsRover := MarsRover in: 0@0 withDir: #N.
+	marsRover := MarsRover in: 0@0 withDir: DirNorth new.
 	
 	marsRover move: 'rfff'.
 	
@@ -117,11 +117,27 @@ test07MarsRoverRecibeComandoSeMueveVariasPosiciones
 	
 	! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 20:35:35'!
-test08MarsRoverRecibeComandoSeMueveVariasPosicionesHaciaAtras
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/3/2022 19:16:51'!
+test08MarsRoverRecibeComandoSeMueveVariasPosicionesHaciaAdelante
 
 	| marsRover |
-	marsRover := MarsRover in: 0@0 withDir: #N.
+	marsRover := MarsRover in: 0@0 withDir: DirNorth new.
+	
+	marsRover move: 'rfff'.
+	
+	self assert: (marsRover inPos: 3@0). 
+	
+	
+	
+	
+	
+	! !
+
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/3/2022 19:16:55'!
+test09MarsRoverRecibeComandoSeMueveVariasPosicionesHaciaAtras
+
+	| marsRover |
+	marsRover := MarsRover in: 0@0 withDir: DirNorth new.
 	
 	marsRover move: 'rbbb'.
 	
@@ -133,9 +149,65 @@ test08MarsRoverRecibeComandoSeMueveVariasPosicionesHaciaAtras
 	
 	! !
 
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/4/2022 16:32:55'!
+test10MarsRoverRecibeComandoParaRotarAPosicionSur
+
+	| marsRover |
+	marsRover := MarsRover in: 0@0 withDir: DirNorth new.
+	
+	marsRover move: 'rr'.
+	
+	self assert: (marsRover inDir: DirSouth). 
+	
+	
+	
+	
+	
+	! !
+
+!MarsRoverTest methodsFor: 'mars rover move test' stamp: 'jr 11/4/2022 16:33:05'!
+test11MarsRoverRecibeComandoParaRotarAPosicionEste
+
+	| marsRover |
+	marsRover := MarsRover in: 0@0 withDir: DirWest new.
+	
+	marsRover move: 'rr'.
+	
+	self assert: (marsRover inDir: DirEast). 
+	
+	
+	
+	
+	
+	! !
+
+
+!classDefinition: #Direction category: 'MarsRover-Exercise'!
+Object subclass: #Direction
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRover-Exercise'!
+
+!Direction methodsFor: 'as yet unclassified' stamp: 'CG 11/2/2022 20:57:58'!
+moveBackwards
+	self subclassResponsibility.! !
+
+!Direction methodsFor: 'as yet unclassified' stamp: 'CG 11/2/2022 21:00:09'!
+moveForward
+	self subclassResponsibility.! !
+
+!Direction methodsFor: 'as yet unclassified' stamp: 'CG 11/2/2022 21:00:17'!
+rotateToLeft
+	self subclassResponsibility.! !
+
+!Direction methodsFor: 'as yet unclassified' stamp: 'CG 11/2/2022 21:00:23'!
+rotateToRight
+	self subclassResponsibility.! !
+
 
 !classDefinition: #DirEast category: 'MarsRover-Exercise'!
-Object subclass: #DirEast
+Direction subclass: #DirEast
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -145,8 +217,8 @@ Object subclass: #DirEast
 moveBackwards
 	^ -1@0! !
 
-!DirEast methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 20:11:16'!
-moveFoward
+!DirEast methodsFor: 'as yet unclassified' stamp: 'CG 11/2/2022 20:47:51'!
+moveForward
 	^ 1@0! !
 
 !DirEast methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 19:37:30'!
@@ -157,21 +229,29 @@ rotateToLeft
 rotateToRight
 	^ DirSouth new.! !
 
+!DirEast methodsFor: 'as yet unclassified' stamp: 'CG 11/2/2022 21:53:21'!
+value
+	^ #E.! !
+
 
 !classDefinition: #DirNorth category: 'MarsRover-Exercise'!
-Object subclass: #DirNorth
+Direction subclass: #DirNorth
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!DirNorth methodsFor: 'move' stamp: 'jr 11/2/2022 20:32:27'!
-moveFoward
+!DirNorth methodsFor: 'move' stamp: 'CG 11/2/2022 20:50:33'!
+moveBackwards
+	^ 0@-1! !
+
+!DirNorth methodsFor: 'move' stamp: 'CG 11/2/2022 20:57:35'!
+moveForward
 	^ 0@1.! !
 
-!DirNorth methodsFor: 'move' stamp: 'jr 11/2/2022 19:44:18'!
+!DirNorth methodsFor: 'move' stamp: 'CG 11/2/2022 20:46:16'!
 rotateToLeft
-	^ DirWeast new.! !
+	^ DirWest new.! !
 
 
 !DirNorth methodsFor: 'xxx' stamp: 'jr 11/2/2022 20:00:49'!
@@ -184,39 +264,59 @@ value
 
 
 !classDefinition: #DirSouth category: 'MarsRover-Exercise'!
-Object subclass: #DirSouth
+Direction subclass: #DirSouth
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
+
+!DirSouth methodsFor: 'xxx' stamp: 'CG 11/2/2022 20:51:31'!
+moveBackwards
+	^ 0@1.! !
+
+!DirSouth methodsFor: 'xxx' stamp: 'CG 11/2/2022 20:49:13'!
+moveForward
+	^ 0@-1.! !
 
 !DirSouth methodsFor: 'xxx' stamp: 'jr 11/2/2022 20:23:16'!
 rotateToLeft
 	^ DirEast new.! !
 
-!DirSouth methodsFor: 'xxx' stamp: 'jr 11/2/2022 20:03:03'!
+!DirSouth methodsFor: 'xxx' stamp: 'CG 11/2/2022 20:46:07'!
 rotateToRight
-	^ DirWeast new.! !
+	^ DirWest new.! !
+
+!DirSouth methodsFor: 'xxx' stamp: 'CG 11/2/2022 21:49:55'!
+value
+	^ #S.! !
 
 
-!classDefinition: #DirWeast category: 'MarsRover-Exercise'!
-Object subclass: #DirWeast
+!classDefinition: #DirWest category: 'MarsRover-Exercise'!
+Direction subclass: #DirWest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!DirWeast methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 19:53:47'!
-moveFoward
+!DirWest methodsFor: 'as yet unclassified' stamp: 'CG 11/2/2022 20:52:32'!
+moveBackwards
+	^ 1@0! !
+
+!DirWest methodsFor: 'as yet unclassified' stamp: 'CG 11/2/2022 20:48:42'!
+moveForward
 	^ -1@0! !
 
-!DirWeast methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 20:22:18'!
+!DirWest methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 20:22:18'!
 rotateToLeft
 	^ DirSouth new.! !
 
-!DirWeast methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 20:03:35'!
+!DirWest methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 20:03:35'!
 rotateToRight
 	^ DirNorth new.! !
+
+!DirWest methodsFor: 'as yet unclassified' stamp: 'CG 11/2/2022 21:53:08'!
+value
+	^ #W.! !
 
 
 !classDefinition: #MarsRover category: 'MarsRover-Exercise'!
@@ -226,19 +326,9 @@ Object subclass: #MarsRover
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!MarsRover methodsFor: 'initialization' stamp: 'jr 11/2/2022 16:51:37'!
-initializeIn: aPoint withDir: aSymbol 
-	self shouldBeImplemented.
-	point := aPoint.
-	symbol := aSymbol.! !
-
-
-!MarsRover methodsFor: 'private' stamp: 'jr 11/2/2022 19:47:43'!
-dir: aSymbol 
-	aSymbol = #N ifTrue: [ dir := DirNorth new].
-	aSymbol = #S ifTrue: [ dir := DirSouth new].
-	aSymbol = #W ifTrue: [ dir := DirWeast new].
-	aSymbol = #E ifTrue: [ dir := DirEast new].
+!MarsRover methodsFor: 'private' stamp: 'jr 11/3/2022 19:17:32'!
+dir: aDirection
+	dir := aDirection.
 	! !
 
 !MarsRover methodsFor: 'private' stamp: 'jr 11/2/2022 16:54:04'!
@@ -246,25 +336,24 @@ pos: aPoint
 	pos := aPoint! !
 
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'jr 11/2/2022 20:36:03'!
+!MarsRover methodsFor: 'movement' stamp: 'jr 11/3/2022 19:12:37'!
 move: aCommand
 	|aux|
-	
 	aux := aCommand asArray.
 	
 	1 to: (aux size) do: [:i |
 		((aux at: i) = $l) ifTrue: [dir := dir rotateToLeft].
 		((aux at: i) = $r) ifTrue: [dir := dir rotateToRight].
-		((aux at: i) = $f) ifTrue: [pos := pos + dir moveFoward] .
+		((aux at: i) = $f) ifTrue: [pos := pos + dir moveForward] .
 		((aux at: i) = $b) ifTrue: [pos := pos + dir moveBackwards].
 		].! !
 
 
-!MarsRover methodsFor: 'xxx' stamp: 'jr 11/2/2022 20:06:31'!
-inDir: aSymbol 
-	^ dir value = aSymbol.! !
+!MarsRover methodsFor: 'testing' stamp: 'jr 11/4/2022 16:31:52'!
+inDir: aDireccion
+	^ dir isKindOf: aDireccion.! !
 
-!MarsRover methodsFor: 'xxx' stamp: 'jr 11/2/2022 16:59:46'!
+!MarsRover methodsFor: 'testing' stamp: 'jr 11/2/2022 16:59:46'!
 inPos: aPoint 
 	^ pos = aPoint! !
 
