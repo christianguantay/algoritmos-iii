@@ -1,3 +1,56 @@
+!classDefinition: #PortfolioTest category: 'ServiciosFinancieros-Ejercicio'!
+TestCase subclass: #PortfolioTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'CG 11/11/2022 17:17:22'!
+test01EmptyPortfolioShouldHaveZeroBalance
+	| portfolio |
+	
+	portfolio := Portfolio with: {}.
+	
+	self assert: 0*peso equals: portfolio balance.! !
+
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'CG 11/11/2022 17:14:36'!
+test02PortfolioWithAnAccountShouldHaveTheSameBalanceAsTheAccount
+	| portfolio anAccount |
+	
+	anAccount := ReceptiveAccount new.
+	
+	Deposit register: 50*peso on: anAccount.
+	portfolio := Portfolio with: {anAccount}.
+	
+	self assert: anAccount balance equals: portfolio balance.! !
+
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'CG 11/11/2022 17:23:46'!
+test03PortfolioWithMultipleAccountsShouldHaveTheSameBalanceAsTheSumOfTheBalanceOfTheAccounts
+	| portfolio anAccount aSecondAccount|
+	
+	anAccount := ReceptiveAccount new.
+	aSecondAccount := ReceptiveAccount new.
+		
+	Deposit register: 50*peso on: anAccount.
+	Deposit register: 50*peso on: aSecondAccount.
+	
+	portfolio := Portfolio with: {anAccount. aSecondAccount.}.
+	
+	self assert: 100*peso equals: portfolio balance.! !
+
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'CG 11/11/2022 17:33:13'!
+test04PortfolioWithAccountHasRegisteredTransaction
+	| portfolio anAccount aDeposit|
+	
+	anAccount := ReceptiveAccount new.
+		
+	aDeposit := Deposit register: 50*peso on: anAccount.
+	
+	portfolio := Portfolio with: {anAccount.}.
+	
+	self assert: true equals: {portfolio hasRegistered: aDeposit}.! !
+
+
 !classDefinition: #ReceptiveAccountTest category: 'ServiciosFinancieros-Ejercicio'!
 TestCase subclass: #ReceptiveAccountTest
 	instanceVariableNames: ''
@@ -363,6 +416,42 @@ of: anAccount withCounterpart: counterpartAccount
 	^ result
 	
 	! !
+
+
+!classDefinition: #Portfolio category: 'ServiciosFinancieros-Ejercicio'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'accounts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'CG 11/11/2022 17:21:28'!
+balance
+	^accounts sum:[
+		:anAccount | anAccount balance
+		]
+	ifEmpty: [0*peso].! !
+
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'CG 11/11/2022 17:34:35'!
+hasRegistered: aTransaction
+	^(accounts anySatisfy: [
+		:anAccount | anAccount hasRegistered: aTransaction 
+		]).! !
+
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'CG 11/11/2022 16:54:54'!
+initializeWith: aNumberOfAccounts
+	accounts := aNumberOfAccounts asOrderedCollection.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Portfolio class' category: 'ServiciosFinancieros-Ejercicio'!
+Portfolio class
+	instanceVariableNames: ''!
+
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'CG 11/11/2022 17:06:38'!
+with: aNumberOfAccounts 
+
+	^self new initializeWith: aNumberOfAccounts. ! !
 
 
 !classDefinition: #ReceptiveAccount category: 'ServiciosFinancieros-Ejercicio'!
