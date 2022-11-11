@@ -38,18 +38,6 @@ test03PortfolioWithMultipleAccountsShouldHaveTheSameBalanceAsTheSumOfTheBalanceO
 	
 	self assert: 100*peso equals: portfolio balance.! !
 
-!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'CG 11/11/2022 17:33:13'!
-test04PortfolioWithAccountHasRegisteredTransaction
-	| portfolio anAccount aDeposit|
-	
-	anAccount := ReceptiveAccount new.
-		
-	aDeposit := Deposit register: 50*peso on: anAccount.
-	
-	portfolio := Portfolio with: {anAccount.}.
-	
-	self assert: true equals: {portfolio hasRegistered: aDeposit}.! !
-
 
 !classDefinition: #ReceptiveAccountTest category: 'ServiciosFinancieros-Ejercicio'!
 TestCase subclass: #ReceptiveAccountTest
